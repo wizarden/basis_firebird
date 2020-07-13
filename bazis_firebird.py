@@ -1,7 +1,7 @@
 import fdb as fd
 
 con11 = fd.connect(
-    dsn='d:/my11.FDB',
+    dsn='d:/IL.FDB',
     user='sysdba',
     password='masterkey',
     charset='UTF8'
@@ -24,9 +24,13 @@ cur11.execute("select * from GROUP_MATERIAL order by ID_GRM")
 for t in cur11:
     print(str(t).replace('None', 'null'))
     cur10.execute("insert into GROUP_MATERIAL values " + str(t).replace('None', 'null'))
+con10.commit()
 
-#cur10.execute("insert into GROUP_MATERIAL values (1, 'Направляющие', 1, 4, '') ")
-#cur10.execute("insert into GROUP_MATERIAL values (1, 'База материалов', null, 1, '') ")
+cur10.execute("delete from MATERIAL")
+con10.commit()
+cur11.execute("select * from MATERIAL")
 
-
+for t in cur11:
+    print(str(t).replace('None', 'null'))
+    cur10.execute("insert into MATERIAL values " + str(t).replace('None', 'null'))
 con10.commit()
